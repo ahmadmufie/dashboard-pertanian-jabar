@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
-def create_forecast(df_input: pd.DataFrame, years_to_predict: int = 3) -> (pd.DataFrame, str):
+def create_forecast(df_input: pd.DataFrame, years_to_predict: int = 3) -> tuple[pd.DataFrame, str]:
     """
     Membuat ramalan time series sederhana menggunakan Regresi Linier.
     Hanya menggunakan 'Tahun' sebagai fitur (X) dan 'produksi' sebagai target (y).
