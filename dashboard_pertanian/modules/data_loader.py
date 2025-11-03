@@ -2,10 +2,14 @@
 
 import pandas as pd
 import streamlit as st
+from pathlib import Path 
 
-# Path file (sesuaikan jika perlu)
-FILE_PADI = 'data/summary.csv'
-FILE_SAYURAN = 'data/sayuran_integrated.csv'
+BASE_DIR = Path(__file__).parent.parent
+
+# bangun path yang benar dari root
+FILE_PADI = BASE_DIR / 'data' / 'summary.csv'
+FILE_SAYURAN = BASE_DIR / 'data' / 'sayuran_integrated.csv'
+# --- AKHIR PERBAIKAN ---
 
 def load_data_padi():
     """Memuat dan membersihkan data padi dari summary.csv."""
