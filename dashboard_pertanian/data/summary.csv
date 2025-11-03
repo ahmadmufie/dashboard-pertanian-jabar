@@ -1,0 +1,127 @@
+kabupaten_kota,Tahun,produksi,luas_panen,produktivitas,komoditas,jenis
+Bogor,2019,307860.89,54987.79,55.99,padi,padi
+Sukabumi,2019,468764.28,93377.51,50.2,padi,padi
+Cianjur,2019,641804.29,,54.43,padi,padi
+Bandung,2019,344214.39,56310.25,61.13,padi,padi
+Garut,2019,449395.01,80397.63,55.9,padi,padi
+Tasikmalaya,2019,441241.69,83365.36,52.93,padi,padi
+Ciamis,2019,276734.07,51209.15,54.04,padi,padi
+Kuningan,2019,219953.32,44201.18,49.76,padi,padi
+Cirebon,2019,502574.97,87700.59,57.31,padi,padi
+Majalengka,2019,572005.83,94996.45,60.21,padi,padi
+Sumedang,2019,302668.85,56438.9,53.63,padi,padi
+Indramayu,2019,1376429.68,,63.8,padi,padi
+Subang,2019,942932.04,,60.33,padi,padi
+Purwakarta,2019,143820.03,26452.65,54.37,padi,padi
+Karawang,2019,1117813.97,,60.16,padi,padi
+Bekasi,2019,549639.74,97749.45,56.23,padi,padi
+Pangandaran,2019,174597.02,29858.96,58.47,padi,padi
+Kota Depok,2019,465.03,84.99,54.72,padi,padi
+Kota Cimahi,2019,406.54,70.93,57.32,padi,padi
+Kota Banjar,2019,28744.69,5055.12,56.86,padi,padi
+Jawa Barat,2019,9084957.22,,57.54,padi,padi
+Bogor,2020,298974.65,55692.05,53.68,padi,padi
+Sukabumi,2020,521459.25,93371.47,55.85,padi,padi
+Cianjur,2020,622992.32,,54.72,padi,padi
+Bandung,2020,277156.28,50150.32,55.27,padi,padi
+Garut,2020,424913.9,77873.41,54.56,padi,padi
+Tasikmalaya,2020,444358.24,72941.41,60.92,padi,padi
+Ciamis,2020,282791.46,52925.2,53.43,padi,padi
+Kuningan,2020,277317.9,45785.65,60.57,padi,padi
+Cirebon,2020,497080.1,83233.39,59.72,padi,padi
+Majalengka,2020,566334.48,98037.63,57.77,padi,padi
+Sumedang,2020,307178.0,55892.07,54.96,padi,padi
+Indramayu,2020,1363311.87,,60.16,padi,padi
+Subang,2020,970759.74,,57.3,padi,padi
+Purwakarta,2020,159957.49,30315.68,52.76,padi,padi
+Karawang,2020,1087873.9,,59.8,padi,padi
+Bekasi,2020,504103.31,,48.86,padi,padi
+Pangandaran,2020,154982.57,29313.07,52.87,padi,padi
+Kota Depok,2020,189.23,30.99,61.06,padi,padi
+Kota Cimahi,2020,437.44,77.49,56.45,padi,padi
+Kota Banjar,2020,28371.86,5344.06,53.09,padi,padi
+Jawa Barat,2020,9016772.58,,56.82,padi,padi
+Bogor,2021,285154.0,57426.46,49.66,padi,padi
+Sukabumi,2021,492926.27,89510.44,55.07,padi,padi
+Cianjur,2021,611773.02,,53.88,padi,padi
+Bandung,2021,310715.2,50552.68,61.46,padi,padi
+Garut,2021,443319.91,75965.56,58.36,padi,padi
+Tasikmalaya,2021,445909.19,82934.85,53.77,padi,padi
+Ciamis,2021,320330.73,55013.02,58.23,padi,padi
+Kuningan,2021,275893.22,47236.3,58.41,padi,padi
+Cirebon,2021,464730.69,84946.29,54.71,padi,padi
+Majalengka,2021,534250.18,97515.62,54.79,padi,padi
+Sumedang,2021,262037.84,53341.28,49.12,padi,padi
+Indramayu,2021,1319623.64,,58.12,padi,padi
+Subang,2021,959456.43,,58.52,padi,padi
+Purwakarta,2021,167865.29,32930.64,50.98,padi,padi
+Karawang,2021,1234133.75,,62.36,padi,padi
+Bekasi,2021,587586.07,,58.56,padi,padi
+Pangandaran,2021,140000.72,27677.79,50.58,padi,padi
+Kota Depok,2021,244.35,45.39,53.83,padi,padi
+Kota Cimahi,2021,442.71,76.62,57.78,padi,padi
+Kota Banjar,2021,35624.74,5723.33,62.24,padi,padi
+Jawa Barat,2021,9113573.08,,56.81,padi,padi
+Bogor,2022,299893.8,56002.23,53.55,padi,padi
+Sukabumi,2022,508220.48,95012.99,53.49,padi,padi
+Cianjur,2022,617941.03,,53.33,padi,padi
+Bandung,2022,289205.7,47537.79,60.84,padi,padi
+Garut,2022,441316.2,75951.04,58.11,padi,padi
+Tasikmalaya,2022,430961.73,81310.17,53.0,padi,padi
+Ciamis,2022,305676.17,55844.25,54.74,padi,padi
+Kuningan,2022,277583.76,48250.13,57.53,padi,padi
+Cirebon,2022,494699.98,84892.18,58.27,padi,padi
+Majalengka,2022,566087.34,,56.08,padi,padi
+Sumedang,2022,298163.0,56662.01,52.62,padi,padi
+Indramayu,2022,1482255.86,,60.42,padi,padi
+Subang,2022,1038780.58,,58.36,padi,padi
+Purwakarta,2022,188731.69,34396.95,54.87,padi,padi
+Karawang,2022,1226880.08,,60.05,padi,padi
+Bekasi,2022,555747.09,,53.91,padi,padi
+Pangandaran,2022,148670.61,30115.9,49.37,padi,padi
+Kota Depok,2022,72.13,14.55,49.57,padi,padi
+Kota Cimahi,2022,338.03,59.59,56.73,padi,padi
+Kota Banjar,2022,31271.18,5978.36,52.31,padi,padi
+Jawa Barat,2022,9433723.09,,56.75,padi,padi
+Bogor,2023,283266.58,50999.48,55.54,padi,padi
+Sukabumi,2023,512391.58,93866.34,54.59,padi,padi
+Cianjur,2023,650123.11,,56.17,padi,padi
+Bandung,2023,300142.89,49366.27,60.8,padi,padi
+Garut,2023,453787.94,74538.34,60.88,padi,padi
+Tasikmalaya,2023,391379.69,69685.72,56.16,padi,padi
+Ciamis,2023,299124.49,53976.46,55.42,padi,padi
+Kuningan,2023,261023.34,44815.65,58.24,padi,padi
+Cirebon,2023,495878.2,82797.11,59.89,padi,padi
+Majalengka,2023,558430.27,,55.77,padi,padi
+Sumedang,2023,287112.51,53525.51,53.64,padi,padi
+Indramayu,2023,1424303.1,,61.8,padi,padi
+Subang,2023,1027659.54,,58.77,padi,padi
+Purwakarta,2023,186533.23,31884.84,58.5,padi,padi
+Karawang,2023,1131976.57,,59.87,padi,padi
+Bekasi,2023,497339.49,93338.02,53.28,padi,padi
+Pangandaran,2023,139300.3,30250.9,46.05,padi,padi
+Kota Depok,2023,30.51,5.82,52.42,padi,padi
+Kota Cimahi,2023,440.48,76.61,57.5,padi,padi
+Kota Banjar,2023,31891.85,5625.24,56.69,padi,padi
+Jawa Barat,2023,9140039.2,,57.71,padi,padi
+Bogor,2024,299675.82,50168.52,59.73,padi,padi
+Sukabumi,2024,466835.93,81612.3,57.2,padi,padi
+Cianjur,2024,630847.78,,59.91,padi,padi
+Bandung,2024,334188.58,51947.62,64.33,padi,padi
+Garut,2024,454937.51,71635.66,63.51,padi,padi
+Tasikmalaya,2024,353415.07,66324.47,53.29,padi,padi
+Ciamis,2024,236248.23,44307.13,53.32,padi,padi
+Kuningan,2024,223427.76,41522.97,53.81,padi,padi
+Cirebon,2024,510632.02,84465.74,60.45,padi,padi
+Majalengka,2024,484085.66,87220.48,55.5,padi,padi
+Sumedang,2024,271869.0,49430.79,55.0,padi,padi
+Indramayu,2024,1399352.12,,65.74,padi,padi
+Subang,2024,968941.45,,59.12,padi,padi
+Purwakarta,2024,180397.1,30629.17,58.9,padi,padi
+Karawang,2024,1041530.95,,56.89,padi,padi
+Bekasi,2024,416476.98,84199.55,49.46,padi,padi
+Pangandaran,2024,118188.45,24131.55,48.98,padi,padi
+Kota Depok,2024,32.73,5.82,56.24,padi,padi
+Kota Cimahi,2024,435.34,70.93,61.38,padi,padi
+Kota Banjar,2024,28913.8,4782.04,60.46,padi,padi
+Jawa Barat,2024,8626879.91,,58.47,padi,padi
