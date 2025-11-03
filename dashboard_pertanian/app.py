@@ -6,10 +6,10 @@ import plotly.express as px
 from modules.data_loader import get_master_data
 from modules.export_utils import to_excel
 
-# === 1. KONFIGURASI HALAMAN ===
+# === 1. KONFIGURASI HALAMAN (PENINGKATAN IKON) ===
 st.set_page_config(
-    page_title="Dashboard Pertanian Jawa Barat",
-    page_icon="bar_chart",
+    page_title="Dashboard Pertanian Jabar",
+    page_icon="🌾",
     layout="wide"
 )
 
@@ -51,7 +51,7 @@ if selected_komoditas:
 
 # === 5. HALAMAN UTAMA (MAIN PAGE) ===
 
-st.title("Dashboard Monitoring Indikator Pertanian Jawa Barat")
+st.title("🌾 Dashboard Monitoring Pertanian Jawa Barat")
 st.markdown("Analisis data produksi, luas panen, dan produktivitas pertanian berbasis data BPS.")
 st.markdown("---")
 
@@ -75,15 +75,18 @@ st.markdown("---")
 # --- VISUALISASI DATA MENGGUNAKAN TABS ---
 st.header("Analisis Visual")
 
-# --- PENINGKATAN ESTETIKA (FASE 4.5) ---
-# Kita gunakan palet warna Plotly yang estetik
-# 'Plotly' adalah palet kualitatif (untuk kategori)
-# 'Viridis' adalah palet sekuensial (untuk angka, ramah buta warna)
 PALET_KATEGORI = px.colors.qualitative.Plotly
-PALET_SEKUENSIA = px.colors.sequential.Viridis
+# --- PERUBAHAN PALET WARNA (LEBIH CERAH) ---
+PALET_SEKUENSIA = px.colors.sequential.Plasma
 # ----------------------------------------
 
-tab1, tab2, tab3 = st.tabs(["Analisis Tren", "Analisis Wilayah & Komoditas", "Detail Data Mentah"])
+# --- PENAMBAHAN IKON PADA TABS ---
+tab1, tab2, tab3 = st.tabs([
+    "📈 Analisis Tren", 
+    "🗺️ Analisis Wilayah & Komoditas", 
+    "💾 Detail Data Mentah"
+])
+# ---------------------------------
 
 with tab1:
     st.subheader("Tren Indikator per Tahun")
@@ -96,7 +99,7 @@ with tab1:
         title="Tren Total Produksi dan Luas Panen",
         markers=True,
         labels={"Total": "Total (Ton/Ha)", "Tahun": "Tahun Kalender"},
-        color_discrete_sequence=PALET_KATEGORI # <-- TAMBAHAN ESTETIKA
+        color_discrete_sequence=PALET_KATEGORI
     )
     fig_line.update_layout(legend_title_text='Indikator')
     st.plotly_chart(fig_line, use_container_width=True)
@@ -114,8 +117,8 @@ with tab2:
             title=f"Top {len(df_bar_top15)} Kabupaten/Kota Produksi Tertinggi",
             text='produksi', 
             labels={"produksi": "Total Produksi (Ton)", "kabupaten_kota": "Kabupaten/Kota"},
-            color='produksi', # <-- UBAH WARNA BERDASARKAN NILAI
-            color_continuous_scale=PALET_SEKUENSIA # <-- TAMBAHAN ESTETIKA
+            color='produksi', 
+            color_continuous_scale=PALET_SEKUENSIA # <-- PALET BARU
         )
         fig_bar.update_layout(yaxis={'categoryorder':'total ascending'})
         fig_bar.update_traces(texttemplate='%{text:.2s}', textposition='outside')
@@ -130,8 +133,8 @@ with tab2:
             path=[px.Constant("Semua Komoditas"), 'komoditas'],
             values='produksi',
             title="Proporsi Produksi Berdasarkan Komoditas",
-            color='komoditas', # <-- UBAH WARNA BERDASARKAN KATEGORI
-            color_discrete_sequence=PALET_KATEGORI # <-- TAMBAHAN ESTETIKA
+            color='komoditas', 
+            color_discrete_sequence=PALET_KATEGORI
         )
         fig_tree.update_traces(root_color="lightgrey")
         st.plotly_chart(fig_tree, use_container_width=True)
