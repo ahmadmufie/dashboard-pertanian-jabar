@@ -108,15 +108,23 @@ with tab1:
 with tab2:
     col_vis1, col_vis2 = st.columns(2)
     with col_vis1:
-        st.subheader("Distribusi Produksi per Wilayah")
-        df_bar = df_filtered.groupby('kabupaten_kota')['produksi'].sum().sort_values(ascending=False).reset_index()
-        df_bar_top15 = df_bar.head(15)
-        fig_bar = px.bar(
-            df_bar_top15, x='produksi', y='kabupaten_kota', orientation='h',
-            title=f"Top {len(df_bar_top15)} Kabupaten/Kota Produksi Tertinggi",
-            text='produksi', color='produksi', color_continuous_scale=PALET_SEKUENSIA
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
+            st.subheader("Distribusi Produksi per Wilayah")
+            df_bar = df_filtered.groupby('kabupaten_kota')['produksi'].sum().sort_values(ascending=False).reset_index()
+            df_bar_top15 = df_bar.head(15)
+            fig_bar = px.bar(
+                df_bar_top15, x='produksi', y='kabupaten_kota', orientation='h',
+                title=f"Top {len(df_bar_top15)} Kabupaten/Kota Produksi Tertinggi",
+                text='produksi', color='produksi', color_continuous_scale=PALET_SEKUENSIA
+            )
+            
+            # Mengurutkan sumbu Y dari tertinggi ke terendah
+            fig_bar.update_layout(yaxis={'categoryorder':'total ascending'})
+            
+            # Memformat Teks
+            # '%{text:.2s}' adalah format "SI-prefix" (K=Ribu, M=Juta, G=Miliar)
+            fig_bar.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+            
+            st.plotly_chart(fig_bar, use_container_width=True)
 
     with col_vis2:
         st.subheader("Komposisi Produksi per Komoditas")
