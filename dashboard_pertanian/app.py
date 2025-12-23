@@ -5,7 +5,7 @@ import pandas as pd
 import plotly.express as px
 from modules.data_loader import get_master_data
 from modules.export_utils import to_excel
-from modules.forecasting import create_forecast # <-- 1. IMPORT BARU
+from modules.forecasting import create_forecast
 
 # === 1. KONFIGURASI HALAMAN ===
 st.set_page_config(
@@ -44,7 +44,10 @@ df_filtered = df.copy()
 if selected_tahun:
     df_filtered = df_filtered[df_filtered['Tahun'].isin(selected_tahun)]
 else:
-    df_filtered = df_filtered[df_filtered['Tahun'] == list_tahun[0]]
+    # Default behavior: jika tahun kosong, tetap gunakan semua atau tahun terbaru (opsional)
+    # Di sini kita biarkan logika visualisasi yang menangani jika kosong
+    pass 
+
 if selected_kabupaten:
     df_filtered = df_filtered[df_filtered['kabupaten_kota'].isin(selected_kabupaten)]
 if selected_komoditas:
@@ -56,11 +59,9 @@ st.title("🌾 Dashboard Monitoring Pertanian Jawa Barat")
 st.markdown("Analisis data produksi, luas panen, dan produktivitas pertanian berbasis data BPS.")
 st.markdown("---")
 
-if df_filtered.empty and not selected_tahun: # Perbaikan kecil logika
-    st.warning("Silakan pilih minimal satu tahun di sidebar untuk memulai.")
-    st.stop()
-elif df_filtered.empty:
-    st.warning("Tidak ada data yang ditemukan untuk kombinasi filter yang Anda pilih.")
+# Validasi Data Kosong
+if df_filtered.empty:
+    st.warning("Tidak ada data yang ditemukan untuk kombinasi filter yang Anda pilih. Silakan atur ulang filter di sidebar.")
     st.stop()
 
 # --- Indikator Kinerja Utama (KPI) ---
@@ -82,27 +83,72 @@ st.header("Analisis Visual")
 PALET_KATEGORI = px.colors.qualitative.Plotly
 PALET_SEKUENSIA = px.colors.sequential.Plasma
 
-# --- 2. PENAMBAHAN TAB BARU ---
 tab1, tab2, tab3, tab4 = st.tabs([
     "📈 Analisis Tren", 
     "🗺️ Analisis Wilayah & Komoditas", 
     "💾 Detail Data Mentah",
-    "🔮 Analisis Ramalan (Forecast)" # <-- TAB BARU
+    "🔮 Analisis Ramalan (Forecast)"
 ])
 
 # --- KONTEN TAB 1 (TREN) ---
+# [REVISI] Logika Grafik Garis Dinamis Sesuai Permintaan Dosen
 with tab1:
-    st.subheader("Tren Indikator per Tahun")
-    df_tren = df_filtered.groupby('Tahun')[['produksi', 'luas_panen']].sum().reset_index()
-    df_tren_melted = df_tren.melt('Tahun', var_name='Indikator', value_name='Total')
+    st.subheader("Tren Indikator Pertanian")
     
-    fig_line = px.line(
-        df_tren_melted, x='Tahun', y='Total', color='Indikator',
-        title="Tren Total Produksi dan Luas Panen", markers=True,
-        labels={"Total": "Total (Ton/Ha)", "Tahun": "Tahun Kalender"},
-        color_discrete_sequence=PALET_KATEGORI
-    )
-    st.plotly_chart(fig_line, use_container_width=True)
+    # KASUS 1: Jika User memilih Komoditas spesifik -> Pecah garis berdasarkan Komoditas
+    if len(selected_komoditas) > 0:
+        st.caption(f"Menampilkan perbandingan tren produksi untuk: {', '.join(selected_komoditas)}")
+        
+        # Kelompokkan berdasarkan Tahun DAN Komoditas
+        df_tren = df_filtered.groupby(['Tahun', 'komoditas'])['produksi'].sum().reset_index()
+        
+        fig_line = px.line(
+            df_tren, 
+            x='Tahun', 
+            y='produksi', 
+            color='komoditas', # Ini kuncinya: Warna garis beda tiap komoditas
+            title="Dinamika Produksi per Komoditas Terpilih", 
+            markers=True,
+            labels={"produksi": "Produksi (Ton)", "Tahun": "Tahun", "komoditas": "Jenis Komoditas"}
+        )
+        st.plotly_chart(fig_line, use_container_width=True)
+
+    # KASUS 2: Jika User memilih Wilayah spesifik (tapi Komoditas kosong) -> Pecah garis berdasarkan Wilayah
+    elif len(selected_kabupaten) > 0:
+        st.caption(f"Menampilkan perbandingan tren produksi untuk wilayah terpilih.")
+        
+        # Kelompokkan berdasarkan Tahun DAN Wilayah
+        df_tren = df_filtered.groupby(['Tahun', 'kabupaten_kota'])['produksi'].sum().reset_index()
+        
+        fig_line = px.line(
+            df_tren, 
+            x='Tahun', 
+            y='produksi', 
+            color='kabupaten_kota', # Warna garis beda tiap wilayah
+            title="Dinamika Produksi per Wilayah Terpilih", 
+            markers=True,
+            labels={"produksi": "Produksi (Ton)", "Tahun": "Tahun", "kabupaten_kota": "Wilayah"}
+        )
+        st.plotly_chart(fig_line, use_container_width=True)
+
+    # KASUS 3: Tidak ada filter spesifik (Global) -> Tampilkan Total Agregat (Seperti Semula)
+    else:
+        st.caption("Menampilkan tren total keseluruhan (Agregat) karena tidak ada filter spesifik yang dipilih.")
+        
+        df_tren = df_filtered.groupby('Tahun')[['produksi', 'luas_panen']].sum().reset_index()
+        df_tren_melted = df_tren.melt('Tahun', var_name='Indikator', value_name='Total')
+        
+        fig_line = px.line(
+            df_tren_melted, 
+            x='Tahun', 
+            y='Total', 
+            color='Indikator',
+            title="Tren Total Produksi dan Luas Panen (Gabungan)", 
+            markers=True,
+            labels={"Total": "Nilai Total", "Tahun": "Tahun", "Indikator": "Indikator"},
+            color_discrete_sequence=PALET_KATEGORI
+        )
+        st.plotly_chart(fig_line, use_container_width=True)
 
 # --- KONTEN TAB 2 (WILAYAH & KOMODITAS) ---
 with tab2:
@@ -116,14 +162,8 @@ with tab2:
                 title=f"Top {len(df_bar_top15)} Kabupaten/Kota Produksi Tertinggi",
                 text='produksi', color='produksi', color_continuous_scale=PALET_SEKUENSIA
             )
-            
-            # Mengurutkan sumbu Y dari tertinggi ke terendah
             fig_bar.update_layout(yaxis={'categoryorder':'total ascending'})
-            
-            # Memformat Teks
-            # '%{text:.2s}' adalah format "SI-prefix" (K=Ribu, M=Juta, G=Miliar)
             fig_bar.update_traces(texttemplate='%{text:.2s}', textposition='outside')
-            
             st.plotly_chart(fig_bar, use_container_width=True)
 
     with col_vis2:
@@ -138,7 +178,7 @@ with tab2:
 
 # --- KONTEN TAB 3 (DATA MENTAH) ---
 with tab3:
-    st.subheader("Detail Data Terfilter (Sesuai Filter)")
+    st.subheader("Detail Data Terfilter")
     excel_data = to_excel(df_filtered)
     nama_file = f"data_pertanian_jabar_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
     st.download_button(
@@ -150,57 +190,39 @@ with tab3:
     df_display['kabupaten_kota'] = df_display['kabupaten_kota'].astype(str)
     st.dataframe(df_display, use_container_width=True)
 
-# --- 3. KONTEN TAB 4 (RAMALAN) ---
+# --- KONTEN TAB 4 (RAMALAN) ---
 with tab4:
     st.subheader("Ramalan Produksi (Metode: Regresi Linier)")
     st.markdown("Pilih **satu** wilayah dan **satu** komoditas untuk memprediksi tren produksi 3 tahun ke depan.")
-    st.markdown("*(Catatan: Model ini hanya menggunakan 6 titik data (2019-2024). Ini adalah estimasi tren linier, bukan jaminan.)*")
-
-    # 1. Filter Pilihan (HARUS SATU)
-    # Kita gunakan data 'df' (master) bukan 'df_filtered'
+    
     list_kab_forecast = sorted(df['kabupaten_kota'].unique())
     list_kom_forecast = sorted(df['komoditas'].unique())
 
-    # st.selectbox hanya mengizinkan satu pilihan
-    selected_kab_fc = st.selectbox("Pilih Kabupaten/Kota:", options=list_kab_forecast, index=0)
-    selected_kom_fc = st.selectbox("Pilih Komoditas:", options=list_kom_forecast, index=0)
+    col_fc1, col_fc2 = st.columns(2)
+    with col_fc1:
+        selected_kab_fc = st.selectbox("Pilih Kabupaten/Kota:", options=list_kab_forecast, index=0)
+    with col_fc2:
+        selected_kom_fc = st.selectbox("Pilih Komoditas:", options=list_kom_forecast, index=0)
 
-    # 2. Tombol untuk memicu perhitungan (Best Practice)
     if st.button("Buat Ramalan Produksi"):
-        
-        # 3. Siapkan data untuk model
         data_for_model = df[
             (df['kabupaten_kota'] == selected_kab_fc) &
             (df['komoditas'] == selected_kom_fc)
         ]
         
-        # 4. Jalankan model
         with st.spinner(f"Menghitung ramalan untuk {selected_kom_fc} di {selected_kab_fc}..."):
             df_hasil_forecast, pesan = create_forecast(data_for_model, years_to_predict=3)
 
-        # 5. Tampilkan Hasil
         if df_hasil_forecast is None:
-            st.error(pesan) # Tampilkan error jika data tidak cukup
+            st.error(pesan)
         else:
             st.success(pesan)
-            
-            # Buat grafik Plotly
             fig_forecast = px.line(
-                df_hasil_forecast,
-                x='Tahun',
-                y='produksi',
-                color='Status', # Ini akan membedakan 'Aktual' vs 'Ramalan'
-                markers=True,
+                df_hasil_forecast, x='Tahun', y='produksi', color='Status', markers=True,
                 title=f"Ramalan Produksi {selected_kom_fc} di {selected_kab_fc}",
                 labels={"produksi": "Produksi (Ton)", "Tahun": "Tahun Kalender"},
-                color_discrete_map={ # Peta warna kustom
-                    'Aktual': PALET_KATEGORI[0], # Biru
-                    'Ramalan': PALET_KATEGORI[1]  # Oranye
-                }
+                color_discrete_map={'Aktual': PALET_KATEGORI[0], 'Ramalan': PALET_KATEGORI[1]}
             )
-            # Tambahkan garis putus-putus untuk ramalan (estetika)
             fig_forecast.update_traces(selector={"name": "Ramalan"}, line=dict(dash='dash'))
             st.plotly_chart(fig_forecast, use_container_width=True)
-            
-            st.subheader("Data Ramalan")
             st.dataframe(df_hasil_forecast, use_container_width=True)
